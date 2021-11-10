@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { of } from "rxjs";
@@ -24,7 +25,7 @@ describe('HeroesComponent', () => {
             // Gebruik de mockHeroService als er gevraagd wordt naar de HeroService dependency
             {provide: HeroService, useValue: mockHeroService}
         ],
-        //schemas: [NO_ERRORS_SCHEMA] // negeert de child component en/of niet bestaande elementen/attributen
+        schemas: [NO_ERRORS_SCHEMA] // negeert de child component en/of niet bestaande elementen/attributen
     })
     fixture = TestBed.createComponent(HeroesComponent);
     // Gebruiken debugElement om de heroes property van de component op te vullen met de mock data
@@ -52,6 +53,7 @@ describe('HeroesComponent', () => {
 
   it('should call heroService.deleteHero when the Hero component delete button is clicked', () => {
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    mockHeroService.deleteHero.and.returnValue(of(true));
     fixture.detectChanges();
 
     const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent));
